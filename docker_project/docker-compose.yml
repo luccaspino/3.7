@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  git-config:
+    image: ubuntu:latest
+    secrets:
+      - git_token
+    command: >
+      bash -c "apt-get update && apt-get install -y git && \
+      git config --global user.name 'My Git User' && \
+      git config --global user.token $$(cat /run/secrets/git_token) && \
+      tail -f /dev/null"
+secrets:
+  git_token:
+    external: true
